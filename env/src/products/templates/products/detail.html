@@ -3,13 +3,17 @@
 {% block content %}
     
     <div class="row">
-    <div class="col">    
+    <div class="col-12 col-md-6">    
         <h1>{{ object.title }}</h1> <br>
         <h3>{{ object.timestamp|timesince }} ago</h3>
         {{ object.description }} <br>
         {% if object.image %}
         <img src="{{ object.image.url }}">
         {% endif %}
+    </div>
+    <div class="col-12 col-md-6">
+        {% include "products/snippets/update_cart.html" with product=object cart=cart %}
+             
     </div>
     </div>
    

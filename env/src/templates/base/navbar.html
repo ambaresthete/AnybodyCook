@@ -2,42 +2,58 @@
 {% url 'about' as about_url %}
 {% url 'contact' as contact_url %}
 {% url 'products:list' as products_url %}
+{% url 'logout' as logout_url %}
 {% url 'login' as login_url %}
 {% url 'register' as register_url %}
-
+{% url 'cart:home' as cart_url %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-    <a class="navbar-brand" href="#">{{ brand_name }}</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <div class="container">
+        <a class="navbar-brand" href="#">{{ brand_name }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item {% if request.path == home_url %}active{% endif %}">
                 <a class="nav-link" href="{% url 'home' %}">Home
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
+        
             <li class="nav-item {% if request.path == about_url %}active{% endif %}">
                 <a class="nav-link" href="{{ about_url }}">About</a>
             </li>
+            
             <li class="nav-item {% if request.path == contact_url %}active{% endif %}">
                 <a class="nav-link" href="{% url 'contact' %}">Contact</a>
             </li>
             <li class="nav-item {% if request.path == products_url %}active{% endif %}">
                 <a class="nav-link" href="{{ products_url }}">Products</a>
             </li>
+            {% if request.user.is_authenticated %}
+             
+            <li class="nav-item {% if request.path == logout_url %}active{% endif %}">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+            
+            {% else %}
             <li class="nav-item {% if request.path == login_url %}active{% endif %}">
                 <a class="nav-link" href="{{ login_url }}">Login</a>
-            </li>
+             </li>   
             <li class="nav-item {% if request.path == register_url %}active{% endif %}">
                 <a class="nav-link" href="{{ register_url }}">Register</a>
             </li>
+            {% endif %}
+            <li class="nav-item {% if request.path == cart_url %}active{% endif %}">
+                <a class="nav-link" href="{{ cart_url }}">{{ request.session.cart_items }} <i class="fa fa-shopping-cart"></i></a>
+            </li>
+            
         </ul>
-    <form method="GET" action="{% url "search:query" %}" class="form-inline ml-auto">
+        <form method="GET" action="{% url "search:query" %}" class="form-inline ml-auto">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
     </form>
     </div>
     </div>

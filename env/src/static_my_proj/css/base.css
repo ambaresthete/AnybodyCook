@@ -1,19 +1,23 @@
 body, html{
     height:100%;
+    
 }
+
 #img{
-    background-image:url('../images/food.jpeg');
-    height: 100%; 
+    background-image:url('../images/restaurant.jpg'); 
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    height:100%;
     
 }
 #base{
-    background: rgba(128, 128, 128, 0.7);
-    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.6);
     padding: 20px; 
-}  
+    height:100%;
+}
+
+
 
 
 
