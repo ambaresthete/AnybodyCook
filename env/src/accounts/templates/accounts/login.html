@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="card text-white bg-dark" style="width : 50rem;">
+  <div class="card-body">
+
 <h1>Login</h1>
 <form method="POST"> {% csrf_token %}
   <div class="form-group">
@@ -11,6 +14,8 @@
     <label>Password:</label>
     {{ form.password }}
   </div>
-  <button type="submit" class="btn btn-primary">Login</button>
+  <button type="submit" class="btn btn-raised btn-primary">Login</button>
 </form>
+</div>
+</div>
 {% endblock %}

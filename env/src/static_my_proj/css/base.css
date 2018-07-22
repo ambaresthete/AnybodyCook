@@ -1,21 +1,15 @@
 body, html{
     height:100%;
+    background-image:url('../images/lukas.jpg'); 
+    
+    background-repeat: repeat;
+    background-size: cover;
+
     
 }
 
-#img{
-    background-image:url('../images/restaurant.jpg'); 
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height:100%;
-    
-}
-#base{
-    background: rgba(255, 255, 255, 0.6);
-    padding: 20px; 
-    height:100%;
-}
+
+
 
 
 

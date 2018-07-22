@@ -2,14 +2,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import ContactForm
-
+from roles.models import Role
 def home_page(request):
-    context={
-        "title":"Home Page",
-        "content":"Under Construction"
-    }
-   # return render(request,"home_page.html",context)
-    return redirect("products/")
+    
+    return redirect('/products')
+   
 
 def about_page(request):
     context = {

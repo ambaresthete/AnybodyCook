@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    
+    <div class="card text-white bg-dark" style="width : 50rem;">
+        <div class="card-body">
     <div class="row">
     <div class="col-12 col-md-6">    
         <h1>{{ object.title }}</h1> <br>
@@ -14,6 +15,8 @@
     <div class="col-12 col-md-6">
         {% include "products/snippets/update_cart.html" with product=object cart=cart %}
              
+    </div>
+    </div>
     </div>
     </div>
    

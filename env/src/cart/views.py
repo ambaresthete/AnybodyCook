@@ -19,6 +19,7 @@ def cart_update(request):
         try:
             product_obj = Product.objects.get(id=product_id)
         except Product.DoesNotExist:
+            product_obj = None 
             return redirect("cart:home")
     cart_obj, new_obj = Cart.objects.new_or_get(request)
     if product_obj in cart_obj.products.all():
@@ -63,7 +64,7 @@ def checkout_home(request):
         "billing_profile": billing_profile,
         "login_form" : login_form,
         "address_form": address_form
-    }        
+    }       
     return render(request,"carts/checkout.html",context)    
 
 def checkout_done(request):

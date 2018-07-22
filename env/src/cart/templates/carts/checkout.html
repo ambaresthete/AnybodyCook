@@ -1,14 +1,18 @@
 {% extends 'base.html' %} 
 {% block content %}
-{{ object.order_id }} -- {{ object.cart }}
+
 
 {% if not billing_profile %}
+<div class="card text-white bg-dark" style="width : 50rem;">
+    <div class="card-body">
     <h1>Login</h1>
 
     {% include "accounts/snippets/form.html" with form=login_form next=request.build_absolute_uri %}
-
+</div>
+</div>
 {% else %}
-
+    <div class="card text-white bg-dark" style="width : 50rem;">
+        <div class="card-body">
     {% if not object.shipping_address %}
         <h1>Shipping</h1>
          {% url "checkout_address_create" as checkout_address_create %}
@@ -18,8 +22,7 @@
          {% url "checkout_address_create" as checkout_address_create %}
          {% include "addresses/form.html" with form=address_form next=request.build_absolute_uri action_url=checkout_address_create address_type='billing' %}
     {% else %}
-        <div class="card" style="width : 50rem;">
-            <div class="card-body">
+        
         <h1>Checkout</h1>
         <p>Cart Items : {% for product in object.cart.products.all %} {{ product }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
         <p>Shipping Address : {{ object.shipping_address.get_address }}</p>
@@ -28,10 +31,11 @@
         <p>Shipping Total : {{ object.shipping_total }}</p>
         <p>Order Total : {{ object.total }}</p>
         <form class="form" method="POST" action="">{% csrf_token %}
-            <button type="submit" class="btn btn-success">Checkout</button>
+            <button type="submit" class="btn btn-raised btn-success">Checkout</button>
         </form>
-        </div>
-        </div>
-    {% endif %}    
+        
+    {% endif %}
+    </div>
+    </div>
 {% endif %}
 {% endblock %}

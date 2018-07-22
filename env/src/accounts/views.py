@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import LoginForm, RegisterForm
 from django.utils.http import is_safe_url
+from roles.models import Role
 
 def login_page(request):
     form = LoginForm(request.POST or None)
@@ -15,6 +16,8 @@ def login_page(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            role = Role.objects.get(user=user)
+            request.session['rolename'] = role.rolename
             if is_safe_url(redirect_url, request.get_host()):
                 return redirect(redirect_url)
             else:
@@ -38,8 +41,12 @@ def register_page(request):
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
         new_user = User.objects.create_user(username, email, password)
-        print(new_user)
+        return redirect('login')
     context = {
         "form": form
     }
     return render(request, "accounts/register.html", context)
+
+def logout_page(request):
+    logout(request)
+    return redirect('/login')

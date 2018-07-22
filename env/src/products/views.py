@@ -28,7 +28,6 @@ class ProductFeaturedDetailView(DetailView):
 
 
 class ProductListView(ListView):
-    queryset = Product.objects.all()
     template_name = 'products/list.html'
 
 #    def get_context_data(self,*args,**kwargs):
@@ -38,6 +37,8 @@ class ProductListView(ListView):
 
     def get_queryset(self,*args,**kwargs):
         request=self.request
+        if request.user.is_authenticated:
+            return Product.objects.exclude(user=request.user)
         return Product.objects.all()
 
 def product_list_view(request):
@@ -99,3 +100,4 @@ def product_detail_view(request,pk, **kwargs):
         'object': instance
     }
     return render(request, 'products/detail.html', context)
+

@@ -8,14 +8,12 @@
 
 <body>
 
-    {% include 'base/navbar.html' with brand_name='CookBook' %}
-        <div id="img">
-         <div id="base">     
+    {% include 'base/navbar.html' with brand_name="CookBook" %}
+         
         <div class="container">
             {% block content %}{% endblock %}
     </div>
-        </div>
-        </div>
+       
 
     {% include 'base/js.html' %}
     
