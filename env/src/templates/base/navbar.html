@@ -8,7 +8,7 @@
 {% url 'cart:home' as cart_url %}
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
-    
+     
         <div class="container">
         <a class="navbar-brand" href="#">{{ brand_name }}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -32,15 +32,10 @@
                 <a class="nav-link" href="{% url 'contact' %}">Contact</a>
             </li>
             <li class="nav-item {% if request.path == products_url %}active{% endif %}">
-                <a class="nav-link" href="{{ products_url }}">Products</a>
-            </li>
-            {% if request.user.is_authenticated %}
-             
-            <li class="nav-item {% if request.path == logout_url %}active{% endif %}">
-                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                <a class="nav-link" href="{{ products_url }}">Food Menu</a>
             </li>
             
-            {% else %}
+            {% if not request.user.is_authenticated %}
             <li class="nav-item {% if request.path == login_url %}active{% endif %}">
                 <a class="nav-link" href="{{ login_url }}">Login</a>
              </li>   
@@ -56,13 +51,13 @@
         {% if request.user.is_authenticated %}
         {% if request.session.rolename == "cook" %}
         <form action = "{% url 'upload:product' %}" method="GET">
-        <button type="submit" class="btn btn-light ml-auto mr-3">
+        <button type="submit" class="btn btn-light btn-sm ml-auto mr-3">
             Upload
         </button>
         </form>
         {% else %}
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-light ml-auto mr-3" data-toggle="modal" data-target="#exampleModal">
+        <button type="button" class="btn btn-light btn-sm ml-auto mr-3" data-toggle="modal" data-target="#exampleModal">
             Wanna Sell?
         </button>
         <!-- Modal -->
@@ -79,9 +74,9 @@
                     Click on Yes to become a cook and sell your products right now
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">No</button>
                     <form action="{% url 'roles:role' %}" method="GET">
-                    <button type="submit" class="btn btn-primary">Yes</button>
+                    <button type="submit" class="btn btn-success btn-sm">Yes</button>
                     </form>
                 </div>
             </div>
@@ -93,10 +88,27 @@
         
         <form method="GET" action="{% url "search:query" %}" class="form-inline">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <button class="btn btn-outline-success btn-md my-2 my-sm-0" type="submit">Search</button>
     </form>
+    
     
     </div>
     </div>
-
+    <div>
+         {% if request.user.is_authenticated %}
+        <h5 class="text-white" style="display : inline;">Hello! </h5>
+        <span class="mr-0">
+            <a class="dropdown-toggle text-white" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <h5 style="display : inline;"> {{ request.user }}</h5>
+                <i class="fa fa-lg fa-user"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-primary bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                
+            </div>
+        </span>
+        {% endif %}
+   
+    </div>
+     
 </nav>

@@ -5,7 +5,7 @@ from .forms import ContactForm
 from roles.models import Role
 def home_page(request):
     
-    return redirect('/products')
+    return render(request, "home_page.html", {})
    
 
 def about_page(request):

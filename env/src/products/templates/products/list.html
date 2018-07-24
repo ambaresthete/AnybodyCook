@@ -10,7 +10,7 @@
             
         {% include 'products/snippets/card.html' with instance=obj %}
 
-        {% if forloop.counter|divisibleby:2 %}
+        {% if forloop.counter|divisibleby:3 %}
         </div></div><div class="row mx-auto"><div class="col-12"><hr/></div>
         {% else %}
         </div>
