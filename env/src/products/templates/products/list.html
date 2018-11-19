@@ -18,6 +18,35 @@
        {% endif %}
         {% endfor %}
     </div>
-    
-    
+    {% if object_list.has_other_pages %}
+    <div class="card">
+    <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+            {% if object_list.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ object_list.previous_page_number }}">Previous</a></li>
+            {% else %}    
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1">Previous</a>
+            </li>
+            {% endif %}
+            {% for num in object_list.paginator.page_range %}
+                {% if object_list.number == num %}
+                <li class="page-item active">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}<span class="sr-only">(current)</span></a>
+                </li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+                {% endfor %}
+            {% if object_list.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ object_list.next_page_number }}">Next</a></li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    </div>
+    {% endif %}
 {% endblock %}

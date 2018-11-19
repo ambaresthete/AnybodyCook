@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^cart/', include('cart.urls', namespace='cart')),
     url(r'^upload/', include('upload.urls', namespace='upload')),
     url(r'^roles/', include('roles.urls', namespace='roles')),
+    url(r'^pro/', include('uprofile.urls', namespace='pro')),
 
 
 ]

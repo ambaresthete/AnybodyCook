@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'orders',
     'upload',
     'roles',
+    'uprofile',
 ]
 
 MIDDLEWARE = [

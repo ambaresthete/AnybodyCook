@@ -3,7 +3,7 @@ from django.views.generic import ListView, DetailView
 from django.shortcuts import render, get_object_or_404
 from cart.models import Cart
 from .models import Product
-# Create your views here.
+from django.core.paginator import Paginator
 
 
 class ProductFeaturedListView(ListView):
@@ -24,9 +24,6 @@ class ProductFeaturedDetailView(DetailView):
         return Product.objects.featured()
 
 
-
-
-
 class ProductListView(ListView):
     template_name = 'products/list.html'
 
@@ -38,15 +35,29 @@ class ProductListView(ListView):
     def get_queryset(self,*args,**kwargs):
         request=self.request
         if request.user.is_authenticated:
-            return Product.objects.exclude(user=request.user)
-        return Product.objects.all()
+            products = Product.objects.exclude(user=request.user)
+            paginator = Paginator(products,3)
+            page = request.GET.get('page',1)
+            try:
+                products = paginator.page(page)
+            except PageNotAnInteger:
+                products = paginator.page(1)
+            except EmptyPage:
+                products = paginator.page(paginator.num_pages)
+            return products
+        else:
+            products = Product.objects.all()
+            paginator = Paginator(products, 3)
+            page = request.GET.get('page', 1)
+            try:
+                products = paginator.page(page)
+            except PageNotAnInteger:
+                products = paginator.page(1)
+            except EmptyPage:
+                products = paginator.page(paginator.num_pages)
+            return products
 
-def product_list_view(request):
-    queryset = Product.objects.all()
-    context = {
-        'object_list': queryset
-    }    
-    return render(request,'products/list.html',context)
+
 
 class ProductDetailSlugView(DetailView):
     queryset = Product.objects.all()
@@ -70,34 +81,4 @@ class ProductDetailSlugView(DetailView):
             qs= Product.objects.filter(slug=slug, active=True)
             instance = qs.first()
         return instance
-
-class ProductDetailView(DetailView):
-    queryset = Product.objects.all()
-    template_name = 'products/detail.html'
-
-#    def get_context_data(self,*args,**kwargs):
-#        context = super(ProductDetailView,self).get_context_data(*args,**kwargs)
-#        return context
-
-    def get_object(self,*args,**kwargs):
-        request=self.request
-        pk=self.kwargs.get('pk')
-        instance = Product.objects.get_by_id(pk)
-        if instance is None:
-            raise Http404("Product does not exist")
-        return instance    
-
-
-def product_detail_view(request,pk, **kwargs):
- #   print(pk)
- #   print(kwargs.get('pk'))
- #   queryset = get_object_or_404(Product, pk=pk)
-    instance = Product.objects.get_by_id(pk)
-    if instance is None:
-        raise Http404("Product does not exist")
-    print(instance)
-    context = {
-        'object': instance
-    }
-    return render(request, 'products/detail.html', context)
 
